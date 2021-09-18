@@ -34,14 +34,13 @@ class GamePrinter {
                             attackInfo.entity.getHitpoints() + " хп.");
     }
     //информация о локации
-    public static void location(Entity entity){
-        Location location = entity.getLocation();
+    public static void location(Location location){
         System.out.println("Текущая локация: " + location.name);
         if(location.getEntity() != null) {
             System.out.println("Монстр локации: ");
             status((Animate) location.getEntity());
         }
-        nearbyLoc(entity);
+        nearbyLoc(location);
         System.out.println();
     }
     //инвентарь персонажа
@@ -78,10 +77,10 @@ class GamePrinter {
         System.out.println("*".repeat(firstLine.length()));
     }
     //ближайшие локации к существу
-    public static void nearbyLoc(Entity entity){
+    public static void nearbyLoc(Location location){
         System.out.println("Ближайшие локации: ");
         int i = 1;
-        for (Location l : entity.getLocation().getLinkedLocations()) {
+        for (Location l : location.getLinkedLocations()) {
             System.out.println(" " + i++ + " " + l.name);
         }
     }
