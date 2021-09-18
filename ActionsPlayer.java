@@ -34,7 +34,7 @@ public class ActionsPlayer {
         }));
 
         actions.add(new ActionPlayer("Переместиться в другую локацию", hero->{
-            GamePrinter.nearbyLoc(hero);
+            GamePrinter.nearbyLoc(hero.getLocation());
             int i = 0;
             try {
                 i = in.nextInt();
@@ -52,7 +52,7 @@ public class ActionsPlayer {
 
         actions.add(new ActionPlayer("Инвентарь", ActionsPlayer::inventory));
 
-        actions.add(new ActionPlayer("Информация о локации", hero-> GamePrinter.location(hero)));
+        actions.add(new ActionPlayer("Информация о локации", hero-> GamePrinter.location(hero.getLocation())));
 
         actions.add(new ActionPlayer("В магазин", hero-> {
             if(hero.getLocation().hasShop())
@@ -152,7 +152,7 @@ public class ActionsPlayer {
         }
     }
 
-    private static void selectImprove (){
+    private static void selectImprove (Hero hero){
         //предлагаем игроку выбрать улучшение для персонажа
         GamePrinter.improve();
         int i = 0;
@@ -161,10 +161,10 @@ public class ActionsPlayer {
             if (i < 1 || i > ActionsPlayer.improves.size())
                 throw new Exception();
         } catch (Exception e) {
-            selectImprove();
+            selectImprove(hero);
             return;
         }
-        improves.get(--i).improve(Main.hero);
+        improves.get(--i).improve(hero);
     }
 
     private static void handlerExp(Hero hero){
@@ -173,7 +173,7 @@ public class ActionsPlayer {
         while (hero.getLevel() * hero.getLevel() * 50 <= hero.getExp()) {
             hero.levelUp();
             GamePrinter.levelUp();
-            selectImprove();
+            selectImprove(hero);
         }
     }
 
